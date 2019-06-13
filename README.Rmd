@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/amarsee/andrewacct/branch/master/graph/badge.svg)](https://codecov.io/gh/amarsee/andrewacct?branch=master)
 <!-- badges: end -->
 
-The goal of andrewacct is to ...
+The goal of andrewacct is to provide helpful functions for applying accountability business rules
 
 ## Installation
 
