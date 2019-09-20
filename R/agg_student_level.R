@@ -9,7 +9,8 @@
 #' @keywords aggregate, group, collapse
 #' @export
 #' @examples
-#' agg_student_level(student_level_df, c('enrolled', 'tested', 'valid tests'), c(), system, system_name)
+#' agg_student_level(student_level_df, c('enrolled', 'tested', 'valid tests'), c(), system, system_name, subgroup)
+#' agg_student_level(student_level_df, c('enrolled', 'tested', 'valid tests'), c(), system, school, subgroup)
 
 agg_student_level <- function(df, sum_cols, mean_cols, ...){
   if (length(sum_cols) > 0){
