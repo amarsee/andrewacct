@@ -5,8 +5,7 @@
 \title{A Confidence Interval Function}
 \usage{
 confidence_interval(df, metric_column = "metric",
-  denom_column = "n_count", interval = 95, bound = "upper",
-  out_column = "ci_bound")
+  denom_column = "n_count", interval = 95, bound = "upper")
 }
 \arguments{
 \item{df}{Dataframe. Used first to be friendly to the \%>\% operator.}
@@ -22,7 +21,7 @@ confidence_interval(df, metric_column = "metric",
 \item{out_column}{The name for the resulting column. Defaults to ci_bound}
 }
 \description{
-This function creates a new column with the desired confidence interval bound.
+This function creates a new column with the desired confidence interval bound. Names the new column ci_bound.
 }
 \examples{
 confidence_interval()
