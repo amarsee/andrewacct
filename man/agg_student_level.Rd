@@ -4,14 +4,14 @@
 \alias{agg_student_level}
 \title{Aggregate Student Level to School/District/State}
 \usage{
-agg_student_level(df, sum_cols, mean_cols = c(), ...)
+agg_student_level(df, sum_cols, mean_cols, ...)
 }
 \arguments{
 \item{df}{Dataframe. Used first to be friendly to the \%>\% operator.}
 
 \item{sum_cols}{A character vector of the columns to be summed.}
 
-\item{mean_cols}{A character vector of the columns to find the mean. Default is no columns.}
+\item{mean_cols}{A character vector of the columns to find the mean. Use empty vector if no desired mean columns.}
 
 \item{...}{The columns to aggregate at (e.g. system, system_name, school, school_name)}
 }

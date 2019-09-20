@@ -4,14 +4,14 @@
 #' Provides sums and means for desired columns.
 #' @param df Dataframe. Used first to be friendly to the \%>\% operator.
 #' @param sum_cols A character vector of the columns to be summed.
-#' @param mean_cols A character vector of the columns to find the mean. Default is no columns.
+#' @param mean_cols A character vector of the columns to find the mean. Use empty vector if no desired mean columns.
 #' @param ... The columns to aggregate at (e.g. system, system_name, school, school_name)
 #' @keywords aggregate, group, collapse
 #' @export
 #' @examples
 #' agg_student_level(student_level_df, c('enrolled', 'tested', 'valid tests'), c(), system, system_name)
 
-agg_student_level <- function(df, sum_cols, mean_cols = c(), ...){
+agg_student_level <- function(df, sum_cols, mean_cols, ...){
   if (length(sum_cols) > 0){
   sum_df <- df %>%
     group_by(...) %>%
