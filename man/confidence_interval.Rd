@@ -16,7 +16,7 @@ confidence_interval(df, metric_column = metric, denom_column = n_count,
 
 \item{interval}{The percent confidence for the interval. Defaults to 95.}
 
-\item{bound}{The side of the confidence interval}
+\item{bound}{The side of the confidence interval. Defaults to upper. Choices are upper or lower.}
 
 \item{out_column}{The name for the resulting column. Defaults to ci_bound}
 }

@@ -5,7 +5,7 @@
 #' @param metric_column The column name desired for confidence interval. Defaults to metric
 #' @param denom_column Column name of the denominator used. Defaults to n_count
 #' @param interval The percent confidence for the interval. Defaults to 95.
-#' @param bound The side of the confidence interval
+#' @param bound The side of the confidence interval. Defaults to upper. Choices are upper or lower.
 #' @param out_column The name for the resulting column. Defaults to ci_bound
 #' @keywords confidence interval, confidence, interval, ci
 #' @export
