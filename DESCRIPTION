@@ -13,6 +13,10 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/amarsee/andrewacct
 BugReports: https://github.com/amarsee/andrewacct/issues
+Imports: 
+    purrr,
+    dplyr,
+    magrittr
 Suggests: 
     covr,
     testthat,
