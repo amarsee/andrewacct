@@ -19,3 +19,4 @@ Suggests:
     spelling
 Language: en-US
 Remotes: tidyverse/dplyr
+RoxygenNote: 6.1.1.9000
