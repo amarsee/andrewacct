@@ -4,8 +4,9 @@
 \alias{confidence_interval}
 \title{A Confidence Interval Function}
 \usage{
-confidence_interval(df, metric_column = metric, denom_column = n_count,
-  interval = 95, bound = "upper", out_column = ci_bound)
+confidence_interval(df, metric_column = "metric",
+  denom_column = "n_count", interval = 95, bound = "upper",
+  out_column = "ci_bound")
 }
 \arguments{
 \item{df}{Dataframe. Used first to be friendly to the \%>\% operator.}
