@@ -1,7 +1,7 @@
 #' A function to create a new column with the confidence interval
 #'
 #' This function allows you to express your love of cats.
-#' @param df Dataframe. Used first to be friendly to the %>% operator.
+#' @param df Dataframe. Used first to be friendly to the \%>\% operator.
 #' @param metric_column The column name desired for confidence interval. Defaults to metric
 #' @param denom_column Column name of the denominator used. Defaults to n_count
 #' @param interval The percent confidence for the interval. Defaults to 95.
