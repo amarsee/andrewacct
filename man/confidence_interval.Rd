@@ -2,7 +2,7 @@
 % Please edit documentation in R/confidence_interval.R
 \name{confidence_interval}
 \alias{confidence_interval}
-\title{A function to create a new column with the confidence interval}
+\title{A Confidence Interval Function}
 \usage{
 confidence_interval(df, metric_column = metric, denom_column = n_count,
   interval = 95, bound = "upper", out_column = ci_bound)
@@ -21,7 +21,7 @@ confidence_interval(df, metric_column = metric, denom_column = n_count,
 \item{out_column}{The name for the resulting column. Defaults to ci_bound}
 }
 \description{
-This function allows you to express your love of cats.
+This function creates a new column with the desired confidence interval bound.
 }
 \examples{
 confidence_interval()
