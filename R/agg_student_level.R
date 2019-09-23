@@ -87,8 +87,8 @@ agg_student_level <- function(df, op_list = list(), ...){
     out_df <- base_df
     for (df in list(sum_df, mean_df, median_df, sd_df, var_df)) {
       if(length(df > 0)){
-        if(!all(df == base_df)){
-          out_df <- left_join(out_df, df, by = quo_name(...))
+        if(dplyr::all_equal(df, base_df)[1] == FALSE &  dplyr::all_equal(df, base_df)[2] == FALSE){
+          out_df <- left_join(out_df, df, by = as.character(substitute(...())))
         }
       }
     }
