@@ -17,92 +17,81 @@ agg_student_level <- function(df, op_list = list(), ...){
   if (typeof(op_list) != 'list'){
     stop('Invalid argument for op_list. Please use list of operations (e.g. list(sum = c("enrolled") ) )')
   }
-  if (length(dplyr::setdiff( names(op_list), c('mean', 'sum', 'median', 'mode', 'sd', 'var') ) ) != 0){
-    stop("Invalid argument in op_list. Please use one of the following operations c('mean', 'sum', 'median', 'mode', 'sd', 'var').")
+  if (length(dplyr::setdiff( names(op_list), c('mean', 'sum', 'median', 'sd', 'var') ) ) != 0){
+    stop("Invalid argument in op_list. Please use one of the following operations c('mean', 'sum', 'median', 'sd', 'var').")
   }
   if(length(op_list) == 0){
     return(df)
   } else {
-  if ('sum' %in% names(op_list)) {
-    sum_df <- df %>%
-      group_by(...) %>%
-      summarise_at(
-        .vars = op_list$sum,
-        .funs = ~sum(., na.rm = TRUE)
-      ) %>%
-      ungroup()
-  } else {
-    sum_df <- data.frame()
-  }
-  if ('mean' %in% names(op_list)) {
-    mean_df <- df %>%
-      group_by(...) %>%
-      summarise_at(
-        .vars = op_list$mean,
-        .funs = ~round(mean(., na.rm = TRUE) + 1e-10, 1)
-      ) %>%
-      ungroup()
-  } else {
-    mean_df <- data.frame()
-  }
-  if ('median' %in% names(op_list)) {
-    median_df <- df %>%
-      group_by(...) %>%
-      summarise_at(
-        .vars = op_list$median,
-        .funs = ~round(median(., na.rm = TRUE) + 1e-10, 1)
-      ) %>%
-      ungroup()
-  } else {
-    median_df <- data.frame()
-  }
-  if ('mode' %in% names(op_list)) {
-    mode_df <- df %>%
-      group_by(...) %>%
-      summarise_at(
-        .vars = op_list$mode,
-        .funs = ~round(mode(., na.rm = TRUE) + 1e-10, 1)
-      ) %>%
-      ungroup()
-  } else {
-    mode_df <- data.frame()
-  }
-  if ('sd' %in% names(op_list)) {
-    sd_df <- df %>%
-      group_by(...) %>%
-      summarise_at(
-        .vars = op_list$sd,
-        .funs = ~round(sd(., na.rm = TRUE) + 1e-10, 1)
-      ) %>%
-      ungroup()
-  } else {
-    sd_df <- data.frame()
-  }
-  if ('var' %in% names(op_list)) {
-    var_df <- df %>%
-      group_by(...) %>%
-      summarise_at(
-        .vars = op_list$var,
-        .funs = ~round(var(., na.rm = TRUE) + 1e-10, 1)
-      ) %>%
-      ungroup()
-  } else {
-    var_df <- data.frame()
-  }
-  for (df in list(sum_df, mean_df, median_df, mode_df, sd_df, var_df)) {
-    if(length(df > 0)){
-      base_df <- df
-      break
+    if ('sum' %in% names(op_list)) {
+      sum_df <- df %>%
+        group_by(...) %>%
+        summarise_at(
+          .vars = op_list$sum,
+          .funs = ~sum(., na.rm = TRUE)
+        ) %>%
+        ungroup()
+    } else {
+      sum_df <- data.frame()
     }
-  }
-  out_df <- base_df
-  for (df in list(sum_df, mean_df, median_df, mode_df, sd_df, var_df)) {
-    if(length(df > 0)){
-      if(!all(df == base_df)){
-        out_df <- left_join(out_df, df)
+    if ('mean' %in% names(op_list)) {
+      mean_df <- df %>%
+        group_by(...) %>%
+        summarise_at(
+          .vars = op_list$mean,
+          .funs = ~round(mean(., na.rm = TRUE) + 1e-10, 1)
+        ) %>%
+        ungroup()
+    } else {
+      mean_df <- data.frame()
+    }
+    if ('median' %in% names(op_list)) {
+      median_df <- df %>%
+        group_by(...) %>%
+        summarise_at(
+          .vars = op_list$median,
+          .funs = ~round(median(., na.rm = TRUE) + 1e-10, 1)
+        ) %>%
+        ungroup()
+    } else {
+      median_df <- data.frame()
+    }
+    if ('sd' %in% names(op_list)) {
+      sd_df <- df %>%
+        group_by(...) %>%
+        summarise_at(
+          .vars = op_list$sd,
+          .funs = ~round(sd(., na.rm = TRUE) + 1e-10, 1)
+        ) %>%
+        ungroup()
+    } else {
+      sd_df <- data.frame()
+    }
+    if ('var' %in% names(op_list)) {
+      var_df <- df %>%
+        group_by(...) %>%
+        summarise_at(
+          .vars = op_list$var,
+          .funs = ~round(var(., na.rm = TRUE) + 1e-10, 1)
+        ) %>%
+        ungroup()
+    } else {
+      var_df <- data.frame()
+    }
+    for (df in list(sum_df, mean_df, median_df, sd_df, var_df)) {
+      if(length(df > 0)){
+        base_df <- df
+        break
       }
     }
-  }
-  return(out_df)
+    out_df <- base_df
+    for (df in list(sum_df, mean_df, median_df, sd_df, var_df)) {
+      if(length(df > 0)){
+        if(!all(df == base_df)){
+          out_df <- left_join(out_df, df, by = quo_name(...))
+        }
+      }
+    }
+    return(out_df)
   }
 }
