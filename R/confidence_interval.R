@@ -7,6 +7,7 @@
 #' @param interval The percent confidence for the interval. Defaults to 95.
 #' @param bound The side of the confidence interval. Defaults to upper. Choices are upper or lower.
 #' @keywords confidence interval, confidence, interval, ci
+#' @importFrom stats qnorm
 #' @export
 #' @examples
 #' confidence_interval()

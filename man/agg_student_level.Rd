@@ -4,14 +4,13 @@
 \alias{agg_student_level}
 \title{Aggregate Student Level to School/District/State}
 \usage{
-agg_student_level(df, sum_cols, mean_cols, ...)
+agg_student_level(df, op_list = list(), ...)
 }
 \arguments{
 \item{df}{Dataframe. Used first to be friendly to the \%>\% operator.}
 
-\item{sum_cols}{A character vector of the columns to be summed.}
-
-\item{mean_cols}{A character vector of the columns to find the mean. Use empty vector if no desired mean columns.}
+\item{op_list}{A named list where the name is the operation and the value is a character vector
+of column names to apply the operation to}
 
 \item{...}{The columns to aggregate at (e.g. system, system_name, school, school_name)}
 }
@@ -20,10 +19,7 @@ This function takes a student level dataframe and aggregates it to the school/di
 Provides sums and means for desired columns.
 }
 \examples{
-agg_student_level(student_level_df, c('enrolled', 'tested', 'valid tests'),
-c(), system, system_name, subgroup)
-agg_student_level(student_level_df, c('enrolled', 'tested', 'valid tests'),
-c(), system, school, subgroup)
+agg_student_level(student_level_df,op_list = list(sum = c('enrolled', 'tested', 'valid tests')), system, school, subgroup)
 }
 \keyword{aggregate,}
 \keyword{collapse}
