@@ -8,7 +8,8 @@
 #' @param ... The columns to aggregate at (e.g. system, system_name, school, school_name)
 #' @keywords aggregate, group, collapse
 #' @examples
-#' agg_student_level(student_level_df,op_list = list(sum = c('enrolled', 'tested', 'valid tests')), system, school, subgroup)
+#' agg_student_level(student_level_df,op_list = list(sum = c('enrolled', 'tested', 'valid tests')),
+#' system, school, subgroup)
 #' @export
 
 
@@ -19,6 +20,9 @@ agg_student_level <- function(df, op_list = list(), ...){
   if (length(dplyr::setdiff( names(op_list), c('mean', 'sum', 'median', 'mode', 'sd', 'var') ) ) != 0){
     stop("Invalid argument in op_list. Please use one of the following operations c('mean', 'sum', 'median', 'mode', 'sd', 'var').")
   }
+  if(length(op_list) == 0){
+    return(df)
+  } else {
   if ('sum' %in% names(op_list)) {
     sum_df <- df %>%
       group_by(...) %>%
@@ -88,17 +92,17 @@ agg_student_level <- function(df, op_list = list(), ...){
   for (df in list(sum_df, mean_df, median_df, mode_df, sd_df, var_df)) {
     if(length(df > 0)){
       base_df <- df
+      break
     }
   }
   out_df <- base_df
   for (df in list(sum_df, mean_df, median_df, mode_df, sd_df, var_df)) {
-    if(length(df > 0) & !all(df == base_df)){
-      out_df <- left_join(out_df, df)
+    if(length(df > 0)){
+      if(!all(df == base_df)){
+        out_df <- left_join(out_df, df)
+      }
     }
   }
-  if (length(op_list) > 0) {
-    return(out_df)
-  } else {
-    return(df)
+  return(out_df)
   }
 }
