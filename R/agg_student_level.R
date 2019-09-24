@@ -102,7 +102,11 @@ agg_student_level <- function(df, op_list = list(), ...){
           identical(df, var_df) ~ '_var'
         )
         if(!identical(df, base_df)){
-          out_df <- left_join(out_df, df, by = as.character(substitute(...() ) ), suffix = c(base_suffix , agg_suffix) )
+          if(length( as.character(substitute(...() ) ) ) > 0){
+            out_df <- left_join(out_df, df, by = as.character(substitute(...() ) ), suffix = c(base_suffix , agg_suffix) )
+          } else {
+            out_df <- bind_cols(out_df, df)
+          }
         }
       }
     }
