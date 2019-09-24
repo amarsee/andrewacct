@@ -84,11 +84,25 @@ agg_student_level <- function(df, op_list = list(), ...){
         break
       }
     }
+    base_suffix <- case_when(
+      identical(base_df, sum_df) ~ '_sum',
+      identical(base_df, mean_df) ~ '_avg',
+      identical(base_df, median_df) ~ '_median',
+      identical(base_df, sd_df) ~ '_sd',
+      identical(base_df, var_df) ~ '_var'
+    )
     out_df <- base_df
     for (df in list(sum_df, mean_df, median_df, sd_df, var_df)) {
       if(length(df > 0)){
+        agg_suffix <- case_when(
+          identical(df, sum_df) ~ '_sum',
+          identical(df, mean_df) ~ '_avg',
+          identical(df, median_df) ~ '_median',
+          identical(df, sd_df) ~ '_sd',
+          identical(df, var_df) ~ '_var'
+        )
         if(!identical(df, base_df)){
-          out_df <- left_join(out_df, df, by = as.character(substitute(...())))
+          out_df <- left_join(out_df, df, by = as.character(substitute(...() ) ), suffix = c(base_suffix , agg_sufix) )
         }
       }
     }
