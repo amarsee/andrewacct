@@ -8,7 +8,7 @@
 theme_tdoe <- function(base_size = 12, base_family = "sans") {
   colors <- c(Red = '#d22630', Navy = '#002d72', Gray = '#75787b', Teal = '#2dccd3',
               Yellow = '#d2d755', Orange = '#e87722', `Dark Green` = '#5d7975', `Dark Gray` = "#3C3C3C")
-  (theme_foundation(base_size = base_size, base_family = base_family)
+  (theme_minimal(base_size = base_size, base_family = base_family)
     + theme(
       line = element_line(colour = "black"),
       rect = element_rect(fill = colors["Gray"],
