@@ -11,7 +11,7 @@ theme_tdoe <- function(base_size = 12, base_family = "sans") {
   (theme_minimal(base_size = base_size, base_family = base_family)
     + theme(
       line = element_line(colour = "black"),
-      rect = element_rect(fill = colors["Gray"],
+      rect = element_rect(fill = NA,
                           linetype = 0, colour = NA),
       text = element_text(colour = colors["Dark Gray"]),
       axis.title = element_blank(),
