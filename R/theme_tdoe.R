@@ -46,7 +46,7 @@ add_tdoe_logo <- function(...) {
 tdoe_pal <- function() {
   colors <- c(Red = '#d22630', Navy = '#002d72', Gray = '#75787b', Teal = '#2dccd3',
               Yellow = '#d2d755', Orange = '#e87722', `Dark Green` = '#5d7975', `Dark Gray` = "#3C3C3C")
-  values <- unname(colors[c("Red", "Navy", "Gray")])
+  values <- unname(colors[c("Red", "Navy", "Gray", 'Teal', 'Yellow', 'Orange', 'Dark Green')])
   max_n <- length(values)
   f <- manual_pal(values)
   attr(f, "max_n") <- max_n
