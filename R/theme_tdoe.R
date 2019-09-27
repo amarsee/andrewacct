@@ -8,6 +8,7 @@
 theme_tdoe <- function(base_size = 12, base_family = "sans") {
   colors <- c(Red = '#d22630', Navy = '#002d72', Gray = '#75787b', Teal = '#2dccd3',
               Yellow = '#d2d755', Orange = '#e87722', `Dark Green` = '#5d7975', `Dark Gray` = "#3C3C3C")
+  logo <- image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
   (theme_minimal(base_size = base_size, base_family = base_family)
     + theme(
       line = element_line(colour = "black"),
@@ -29,6 +30,7 @@ theme_tdoe <- function(base_size = 12, base_family = "sans") {
       plot.title = element_text(hjust = 0, size = rel(1.5), face = "bold"),
       plot.margin = unit(c(1, 1, 1, 1), "lines"),
       strip.background = element_rect()))
+  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(1, 'inches'))
 }
 
 #' TDOE color palette
