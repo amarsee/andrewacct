@@ -3,19 +3,17 @@
 #' @inheritParams ggplot2::theme_minimal
 #' @family themes tdoe
 #' @export
-#' @example theme_tdoe()
 #' @importFrom grid unit
 theme_tdoe <- function(base_size = 12, base_family = "sans") {
   colors <- c(Red = '#d22630', Navy = '#002d72', Gray = '#75787b', Teal = '#2dccd3',
               Yellow = '#d2d755', Orange = '#e87722', `Dark Green` = '#5d7975', `Dark Gray` = "#3C3C3C")
-  logo <- image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
   (theme_minimal(base_size = base_size, base_family = base_family)
     + theme(
       line = element_line(colour = "black"),
       rect = element_rect(fill = NA,
                           linetype = 0, colour = NA),
       text = element_text(colour = colors["Dark Gray"]),
-      axis.title = element_blank(),
+      # axis.title = element_blank(),
       axis.text = element_text(),
       axis.ticks = element_blank(),
       axis.line = element_blank(),
@@ -28,9 +26,15 @@ theme_tdoe <- function(base_size = 12, base_family = "sans") {
         element_line(colour = colors["Gray"]),
       panel.grid.minor = element_blank(),
       plot.title = element_text(hjust = 0, size = rel(1.5), face = "bold"),
-      plot.margin = unit(c(1, 1, 1, 1), "lines"),
+      plot.margin = unit(c(1, 1, 3, 1), "lines"),
       strip.background = element_rect()))
-  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(1, 'inches'))
+}
+
+#' @export
+add_tdoe_logo <- function(...) {
+  logo <- magick::image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
+  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(7.5, 'lines'))
+
 }
 
 #' TDOE color palette
@@ -71,3 +75,4 @@ scale_color_tdoe <- scale_colour_tdoe
 scale_fill_tdoe <- function(...) {
   discrete_scale("fill", "economist", tdoe_pal(), ...)
 }
+
