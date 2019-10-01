@@ -4,7 +4,7 @@
 #' @family themes tdoe
 #' @export
 #' @importFrom grid unit
-theme_tdoe <- function(base_size = 12, base_family = "sans") {
+theme_tdoe <- function(base_size = 8, base_family = "sans") {
   colors <- c(Red = '#d22630', Navy = '#002d72', Gray = '#75787b', Teal = '#2dccd3',
               Yellow = '#d2d755', Orange = '#e87722', `Dark Green` = '#5d7975', `Dark Gray` = "#3C3C3C")
   (theme_minimal(base_size = base_size, base_family = base_family)
@@ -16,13 +16,13 @@ theme_tdoe <- function(base_size = 12, base_family = "sans") {
       # axis.title = element_blank(),
       axis.text = element_text(),
       axis.ticks = element_blank(),
-      axis.line = element_line(colour = colors["Gray"], size = 0.75), # element_blank(),
+      axis.line = element_line(colour = colors["Gray"], size = 0.5), # element_blank(),
       legend.background = element_rect(),
       legend.position = "bottom",
       legend.direction = "horizontal",
       legend.box = "vertical",
       panel.grid = element_line(colour = NULL),
-      panel.grid.major.y = element_line(colour = colors["Gray"], size = 0.5),
+      panel.grid.major.y = element_line(colour = colors["Gray"], size = 0.25),
       panel.grid.minor = element_blank(),
       plot.title = element_text(hjust = 0, size = rel(1.5), face = "bold"),
       plot.margin = unit(c(1, 1, 3, 1), "lines"),
@@ -30,10 +30,12 @@ theme_tdoe <- function(base_size = 12, base_family = "sans") {
 }
 
 #' @export
-add_tdoe_logo <- function(...) {
+add_tdoe_logo <- function(plot_object, file_path, fig_height = 4.95, fig_width = 9.17, fig_unit = 'in') {
   logo <- magick::image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
+  png(file_path, height = 4.95, width = fig_width, units = fig_unit)
+  plot_object
   grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(7.5, 'lines'))
-
+  dev.off()
 }
 
 #' TDOE color palette
