@@ -48,9 +48,9 @@ save_with_logo <- function(file_path, plot_object = ggplot2::last_plot(), fig_he
 
 
 #' @export
-add_tdoe_logo <- function(...) {
-  logo <- magick::image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
-  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(7.5, 'lines'))
+add_tdoe_logo <- function(xmin, xmax, ymin, ymax, ...) {
+  logo <- readPNG(source = "N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
+  annotation_custom(rasterGrob(logo, interpolate=TRUE), xmin= xmin, xmax=xmax, ymin= ymin, ymax=ymax, ...)
 }
 
 
