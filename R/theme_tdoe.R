@@ -29,16 +29,20 @@ theme_tdoe <- function(base_size = 8, base_family = "sans") {
       strip.background = element_rect()))
 }
 
+#' Save plot with TDOE Logo
+#' Default is the size of image determined to work best with PowerPoint slides
+#' @param plot_object ggplot object to save
+#' @param file_path Path to save the image, ending in .png
+#' @param fig_height Height of image. Default of 4.95
+#' @param fig_width Width of image. Default of 9.17
+#' @param fig_unit Default of 'in' for inches. Can use 'px' if units are pixels
+#' @param fig_res Resolution of image. Default of 1200.
 #' @export
-add_tdoe_logo <- function(plot_object, file_path, fig_height = 4.95, fig_width = 9.17, fig_unit = 'in') {
+add_tdoe_logo <- function(plot_object, file_path, fig_height = 4.95, fig_width = 9.17, fig_unit = 'in', fig_res = 1200) {
   logo <- magick::image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
-  if(fig_unit != 'px'){
-    png(file_path, height = fig_height, width = fig_width, units = fig_unit, res = 72)
-  } else {
-    png(file_path, height = fig_height, width = fig_width, units = fig_unit)
-  }
+  png(file_path, height = fig_height, width = fig_width, units = fig_unit, res = fig_res)
   plot_object
-  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(7.5, 'lines'))
+  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(1.5, 'inches'))
   dev.off()
 }
 
