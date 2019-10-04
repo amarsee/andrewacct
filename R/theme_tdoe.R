@@ -4,7 +4,7 @@
 #' @family themes tdoe
 #' @export
 #' @importFrom grid unit
-theme_tdoe <- function(base_size = 8, base_family = "sans") {
+theme_tdoe <- function(base_size = 9, base_family = "sans") {
   colors <- c(Red = '#d22630', Navy = '#002d72', Gray = '#75787b', Teal = '#2dccd3',
               Yellow = '#d2d755', Orange = '#e87722', `Dark Green` = '#5d7975', `Dark Gray` = "#3C3C3C")
   (theme_minimal(base_size = base_size, base_family = base_family)
@@ -25,7 +25,9 @@ theme_tdoe <- function(base_size = 8, base_family = "sans") {
       panel.grid.major.y = element_line(colour = colors["Gray"], size = 0.25),
       panel.grid.minor = element_blank(),
       plot.title = element_text(hjust = 0, size = rel(1.5), face = "bold"),
-      plot.margin = unit(c(1, 1, 3, 1), "lines"),
+      plot.subtitle = element_text(hjust = 0, size = rel(1.25)),
+      plot.margin = unit(c(1, 1, 2, 1), "lines"),
+      strip.text = element_text(hjust = 0, size = rel(1.2)),
       strip.background = element_rect()))
 }
 
