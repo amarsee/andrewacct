@@ -27,7 +27,7 @@ theme_tdoe <- function(base_size = 9, base_family = "sans") {
       plot.title = element_text(hjust = 0, size = rel(1.5), face = "bold"),
       plot.subtitle = element_text(hjust = 0, size = rel(1.25)),
       plot.margin = unit(c(1, 1, 2, 1), "lines"),
-      strip.text = element_text(hjust = 0, size = rel(1.2)),
+      strip.text = element_text(size = rel(1.2)),
       strip.background = element_rect()))
 }
 
