@@ -4,7 +4,7 @@
 \alias{theme_tdoe}
 \title{Theme for TDOE plots}
 \usage{
-theme_tdoe(base_size = 8, base_family = "sans")
+theme_tdoe(base_size = 9, base_family = "sans")
 }
 \arguments{
 \item{base_size}{base font size}
