@@ -11,6 +11,7 @@
 #' @param b_cut Cut score for 'B' in Absolute Pathway
 #' @param c_cut Cut score for 'C' in Absolute Pathway
 #' @param d_cut Cut score for 'D' in Absolute Pathway
+#' @param min_n_count Minimum N Count needed to receive score
 #' @keywords achievement, indicator, accountability
 #' @examples
 #' acct_achievement("N://ORP_accountability/projects/2019_student_level_file/2019_student_level_file.csv",
@@ -19,13 +20,13 @@
 #' "N:/ORP_accountability/projects/2019_amo/success_rate_targets_school.csv",
 #' "N:/ORP_accountability/data/2019_final_accountability_files/act_substitution_school.csv",
 #' "N:/ORP_accountability/data/2019_final_accountability_files/school_assessment_file.csv",
-#' 45, 35, 27.5, 20)
+#' 45, 35, 27.5, 20, min_n_count= 30)
 #' @export
 
 
-acct_achievement <- function(sl_path, grade_pools_path, cte_alt_adult_path, school_names_path,
+acct_achievement <- function(sl_path, grade_pools_path, school_names_path,
                               success_amo_path, act_substitution_path, school_assessment_path,
-                              a_cut, b_cut, c_cut, d_cut){
+                              a_cut, b_cut, c_cut, d_cut, min_n_count = 30){
   math_eoc <- c("Algebra I", "Algebra II", "Geometry", "Integrated Math I", "Integrated Math II", "Integrated Math III")
   english_eoc <- c("English I", "English II")
 
@@ -63,7 +64,7 @@ acct_achievement <- function(sl_path, grade_pools_path, cte_alt_adult_path, scho
     transmute(system, school, subgroup, metric_prior = success_rate_prior, AMO_target, AMO_target_double)
 
   # ACT score substitution
-  act_sub <- read_csv("N:/ORP_accountability/data/2019_final_accountability_files/act_substitution_school.csv") %>%
+  act_sub <- read_csv(act_substitution_path) %>%
     #left_join(school_df, by = c('system', 'school')) %>%
     transmute(system, system_name, school, school_name,
               subject = case_when(
@@ -90,64 +91,18 @@ acct_achievement <- function(sl_path, grade_pools_path, cte_alt_adult_path, scho
     # fill(system_name) %>%
     rename(subgroup = reported_race)
 
-  total_by_subgroup <- function(df) {
-    out_df <- df %>%
-      group_by(acct_system, acct_school, subject, subgroup) %>%
-      summarise(
-        enrolled = sum(enrolled, na.rm = TRUE),
-        tested = sum(tested, na.rm = TRUE),
-        valid_tests = sum( valid_test),
-        n_on_track = sum(on_track),
-        n_mastered = sum(mastered)
-      ) %>%
-      ungroup() %>%
-      rename(system = acct_system, school = acct_school)
-    return(out_df)
-  }
-
-  grouped_by_race <- total_by_subgroup(sl)
-
-  all_students <- sl %>%
-    bind_rows(act_sub %>% rename(acct_system = system, acct_school = school)) %>%
-    mutate(subgroup = "All Students") %>%
-    total_by_subgroup()
-
-  super_subgroup <- sl %>%
-    filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>%
-    mutate(subgroup = "Super Subgroup") %>%
-    total_by_subgroup()
-
-  cat_subgroups <- function(student_df, students_grouped ){
-    base_df = students_grouped
-    subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "English Learners with Transitional 1-4", "Students with Disabilities")
-    for (subgroup in subgroups){
-      if (subgroup == "Black/Hispanic/Native American"){
-        hist_df <- student_df %>%
-          filter(bhn_group > 0) %>%
-          mutate(subgroup = "Black/Hispanic/Native American")
-      } else if (subgroup == "Economically Disadvantaged") {
-        hist_df <- student_df %>%
-          filter(economically_disadvantaged > 0) %>%
-          mutate(subgroup = "Economically Disadvantaged")
-      }else if (subgroup == "English Learners with Transitional 1-4") {
-        hist_df <- student_df %>%
-          filter(t1234 > 0 | el > 0) %>%
-          mutate(subgroup = "English Learners with Transitional 1-4")
-      }else {
-        hist_df <- student_df %>%
-          filter(special_ed > 0) %>%
-          mutate(subgroup = "Students with Disabilities")
-      }
-      hist_grouped <- total_by_subgroup(hist_df)
-      base_df <- rbind(base_df, hist_grouped)
-    }
-    return(base_df)
-  }
-
-  state_totals <- cat_subgroups(sl, grouped_by_race) %>%
+  state_totals <- bind_rows(sl %>% bind_rows(act_sub %>% rename(acct_system = system, acct_school = school)) %>%
+                              mutate(subgroup = "All Students"),
+                            sl %>%
+                              filter(bhn_group > 0 | economically_disadvantaged > 0 | t1234 > 0 | el > 0 | special_ed > 0) %>%
+                              mutate(subgroup = "Super Subgroup"),
+                            sl, # Race Subgroups
+                            sl %>% filter(bhn_group > 0) %>% mutate(subgroup = "Black/Hispanic/Native American"),
+                            sl %>% filter(economically_disadvantaged > 0) %>% mutate(subgroup = "Economically Disadvantaged"),
+                            sl %>% filter(t1234 > 0 | el > 0) %>% mutate(subgroup = "English Learners with Transitional 1-4"),
+                            sl %>% filter(special_ed > 0) %>% mutate(subgroup = "Students with Disabilities")) %>%
+    total_by_subgroup() %>%
     filter(subgroup != "Unknown") %>%
-    #rename(system = acct_system, school = acct_school) %>%
-    rbind(all_students, super_subgroup) %>%
     arrange(system, school, subject, subgroup) %>%
     # rename(subject = original_subject) %>%
     mutate(
@@ -157,7 +112,17 @@ acct_achievement <- function(sl_path, grade_pools_path, cte_alt_adult_path, scho
         subgroup == "Native Hawaiian/Pac. Islander" ~ "Native Hawaiian or Other Pacific Islander",
         TRUE ~ subgroup
       )
-    )
+    ) %>%
+    group_by(acct_system, acct_school, subject, subgroup) %>%
+    summarise(
+      enrolled = sum(enrolled, na.rm = TRUE),
+      tested = sum(tested, na.rm = TRUE),
+      valid_tests = sum( valid_test),
+      n_on_track = sum(on_track),
+      n_mastered = sum(mastered)
+    ) %>%
+    ungroup() %>%
+    rename(system = acct_system, school = acct_school)
 
   # ====================== TCAP Participation Rate =======================
   school_assessment <- read_csv(school_assessment_path)
@@ -196,9 +161,9 @@ acct_achievement <- function(sl_path, grade_pools_path, cte_alt_adult_path, scho
     ) %>%
     ungroup() %>%
     mutate(
-      valid_tests = if_else(valid_tests > 29, valid_tests, 0),
-      n_on_track = if_else(valid_tests > 29, n_on_track, 0),
-      n_mastered = if_else(valid_tests > 29, n_mastered, 0)
+      valid_tests = if_else(valid_tests >= min_n_count, valid_tests, 0),
+      n_on_track = if_else(valid_tests >= min_n_count, n_on_track, 0),
+      n_mastered = if_else(valid_tests >= min_n_count, n_mastered, 0)
     ) %>%
     group_by(system, school, subgroup)  %>%
     summarise(

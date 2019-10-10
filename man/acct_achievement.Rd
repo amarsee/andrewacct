@@ -4,9 +4,9 @@
 \alias{acct_achievement}
 \title{Accountability Achievement Calculations}
 \usage{
-acct_achievement(sl_path, grade_pools_path, cte_alt_adult_path,
-  school_names_path, success_amo_path, act_substitution_path,
-  school_assessment_path, a_cut, b_cut, c_cut, d_cut)
+acct_achievement(sl_path, grade_pools_path, school_names_path,
+  success_amo_path, act_substitution_path, school_assessment_path, a_cut,
+  b_cut, c_cut, d_cut, min_n_count = 30)
 }
 \arguments{
 \item{sl_path}{Path to the Student Level file}
@@ -28,6 +28,8 @@ acct_achievement(sl_path, grade_pools_path, cte_alt_adult_path,
 \item{c_cut}{Cut score for 'C' in Absolute Pathway}
 
 \item{d_cut}{Cut score for 'D' in Absolute Pathway}
+
+\item{min_n_count}{Minimum N Count needed to receive score}
 }
 \description{
 This function creates Accountability dataframe for the Achievement Indicator
@@ -39,7 +41,7 @@ acct_achievement("N://ORP_accountability/projects/2019_student_level_file/2019_s
 "N:/ORP_accountability/projects/2019_amo/success_rate_targets_school.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/act_substitution_school.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/school_assessment_file.csv",
-45, 35, 27.5, 20)
+45, 35, 27.5, 20, min_n_count= 30)
 }
 \keyword{accountability}
 \keyword{achievement,}
