@@ -1,7 +1,7 @@
 #' Accountability Achievement Calculations
 #'
 #' This function creates Accountability dataframe for the Achievement Indicator
-#' @param sl_path Path to the Student Level file
+#' @param student_level_df Dataframe with student level achievement data
 #' @param grade_pools_path Path to the Grade Pools file
 #' @param school_names_path Path to the file with School/System names
 #' @param success_amo_path Path to the AMO file for the Achievement Indicator
@@ -14,7 +14,7 @@
 #' @param min_n_count Minimum N Count needed to receive score
 #' @keywords achievement, indicator, accountability
 #' @examples
-#' acct_achievement("N://ORP_accountability/projects/2019_student_level_file/2019_student_level_file.csv",
+#' acct_achievement(sl_df,
 #' "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 #' "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 #' "N:/ORP_accountability/projects/2019_amo/success_rate_targets_school.csv",
@@ -24,7 +24,7 @@
 #' @export
 
 
-acct_achievement <- function(sl_path, grade_pools_path, school_names_path,
+acct_achievement <- function(student_level_df, grade_pools_path, school_names_path,
                               success_amo_path, act_substitution_path, school_assessment_path,
                               a_cut, b_cut, c_cut, d_cut, min_n_count = 30){
   math_eoc <- c("Algebra I", "Algebra II", "Geometry", "Integrated Math I", "Integrated Math II", "Integrated Math III")
@@ -33,7 +33,7 @@ acct_achievement <- function(sl_path, grade_pools_path, school_names_path,
   grade_pools <- read_csv(grade_pools_path) %>%
     select(system, school, pool, designation_ineligible)
 
-  student_level <- read_csv(sl_path)
+  student_level <- student_level_df
 
   sl <- student_level %>%
     filter(!(system == 964 & school == 964 | system == 970 & school == 970)) %>%
@@ -101,7 +101,6 @@ acct_achievement <- function(sl_path, grade_pools_path, school_names_path,
                             sl %>% filter(economically_disadvantaged > 0) %>% mutate(subgroup = "Economically Disadvantaged"),
                             sl %>% filter(t1234 > 0 | el > 0) %>% mutate(subgroup = "English Learners with Transitional 1-4"),
                             sl %>% filter(special_ed > 0) %>% mutate(subgroup = "Students with Disabilities")) %>%
-    total_by_subgroup() %>%
     filter(subgroup != "Unknown") %>%
     arrange(system, school, subject, subgroup) %>%
     # rename(subject = original_subject) %>%
