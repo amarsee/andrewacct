@@ -152,7 +152,7 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
       # n_count = ifelse(n_count >= 20, n_count, 0),
       metric = ifelse(n_count > 0, pct_ready_grad, NA_real_)
     ) %>%
-    ci_upper_bound() %>%
+    confidence_interval() %>%
     left_join(amo_ready_grad, by = c('system', 'school', 'subgroup')) %>%
     mutate(
       score_abs = case_when(

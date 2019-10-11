@@ -26,7 +26,7 @@ acct_elpa <- function(school_elpa_path, grade_pools_path, school_names_path,
 
   school_df <- read_csv(school_names_path)
 
-  elpa <- read_csv() %>%
+  elpa <- read_csv(school_elpa_path) %>%
     filter(school !=0, system != 0, !grepl("Non-", subgroup))  %>%
     mutate(subgroup = if_else(subgroup == 'English Learners', "English Learners with Transitional 1-4", subgroup)) %>%
     transmute(

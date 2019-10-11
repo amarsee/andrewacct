@@ -55,7 +55,7 @@ acct_grad_rate <- function(school_grad_rate_path, grade_pools_path, school_names
       # n_count = if_else(grad_cohort >= 20, grad_cohort, 0),
       metric = if_else(n_count > 0, grad_rate, NA_real_)
     ) %>%
-    ci_upper_bound() %>%
+    confidence_interval() %>%
     left_join(amo_grad, by = c('system', 'school', 'subgroup')) %>%
     mutate(
       score_abs = case_when(

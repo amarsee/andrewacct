@@ -61,7 +61,7 @@ acct_absenteeism <- function(absenteeism_student_level_path, grade_pools_path, s
       n_count = ifelse(n_students >= min_n_count, n_students, 0),
       metric = ifelse(n_count > 0, pct_chronically_absent, NA_real_)
     ) %>%
-    ci_lower_bound() %>%
+    confidence_interval(bound = 'lower') %>%
     left_join(amo_absenteeism, by = c('system', 'school', 'subgroup')) %>%
     left_join(grade_pools, by = c("system", "school"))  %>%
     mutate(
