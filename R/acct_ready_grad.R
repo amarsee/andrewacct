@@ -1,12 +1,11 @@
 #' Accountability Ready Graduate Calculations
 #'
 #' This function creates Accountability dataframe for the Ready Graduate Indicator
-#' @param ready_grad_student_level_path Path to the Ready Graduate Student Level file
+#' @param ready_grad_student_level_path Path to the Ready Graduate Student Level file (For Participation Rate)
 #' @param grade_pools_path Path to the Grade Pools file
 #' @param school_names_path Path to the file with School/System names
-#' @param success_amo_path Path to the AMO file for the Achievement Indicator
-#' @param act_substitution_path Path to the ACT Substitution file
-#' @param school_assessment_path Path to the school level Assessment file
+#' @param ready_grad_amo_path Path to the AMO file for the Ready Graduate Indicator
+#' @param ready_grad_school_path Path to the school level Ready Graduate file
 #' @param a_cut Cut score for 'A' in Absolute Pathway
 #' @param b_cut Cut score for 'B' in Absolute Pathway
 #' @param c_cut Cut score for 'C' in Absolute Pathway
@@ -19,13 +18,12 @@
 #' "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 #' "N:/ORP_accountability/projects/2019_amo/ready_grad_school.csv",
 #' "N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_school.csv",
-#' "N:/ORP_accountability/data/2019_final_accountability_files/school_assessment_file.csv",
-#' 45, 35, 27.5, 20, min_n_count= 30)
+#' a_cut = 40, b_cut = 30, c_cut = 25, d_cut = 16, min_n_count = 30)
 #' @export
 
 
 acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, school_names_path,
-                             read_grad_amo_path, ready_grad_school_path,
+                             ready_grad_amo_path, ready_grad_school_path,
                              a_cut = 40, b_cut = 30, c_cut = 25, d_cut = 16, min_n_count = 30){
 
   grade_pools <- read_csv(grade_pools_path) %>%
@@ -127,7 +125,7 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
 
   # ====================== Ready Grad ========================
 
-  amo_ready_grad <- read_csv(read_grad_amo_path) %>%
+  amo_ready_grad <- read_csv(ready_grad_amo_path) %>%
     filter(!grepl("Non-", subgroup)) %>%
     transmute(
       system, school,
