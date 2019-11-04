@@ -5,7 +5,7 @@
 \title{Accountability Achievement Calculations}
 \usage{
 acct_achievement(student_level_df, grade_pools_path, school_names_path,
-  success_amo_path, act_substitution_path, school_assessment_path, a_cut,
+  success_amo_path, act_substitution_path, school_assessment_df, a_cut,
   b_cut, c_cut, d_cut, min_n_count = 30)
 }
 \arguments{
@@ -19,7 +19,7 @@ acct_achievement(student_level_df, grade_pools_path, school_names_path,
 
 \item{act_substitution_path}{Path to the ACT Substitution file}
 
-\item{school_assessment_path}{Path to the school level Assessment file}
+\item{school_assessment_df}{Dataframe with school level Assessment data}
 
 \item{a_cut}{Cut score for 'A' in Absolute Pathway}
 

@@ -6,7 +6,7 @@
 #' @param school_names_path Path to the file with School/System names
 #' @param success_amo_path Path to the AMO file for the Achievement Indicator
 #' @param act_substitution_path Path to the ACT Substitution file
-#' @param school_assessment_path Path to the school level Assessment file
+#' @param school_assessment_df Dataframe with school level Assessment data
 #' @param a_cut Cut score for 'A' in Absolute Pathway
 #' @param b_cut Cut score for 'B' in Absolute Pathway
 #' @param c_cut Cut score for 'C' in Absolute Pathway
@@ -25,7 +25,7 @@
 
 
 acct_achievement <- function(student_level_df, grade_pools_path, school_names_path,
-                              success_amo_path, act_substitution_path, school_assessment_path,
+                              success_amo_path, act_substitution_path, school_assessment_df,
                               a_cut, b_cut, c_cut, d_cut, min_n_count = 30){
   math_eoc <- c("Algebra I", "Algebra II", "Geometry", "Integrated Math I", "Integrated Math II", "Integrated Math III")
   english_eoc <- c("English I", "English II")
@@ -124,7 +124,7 @@ acct_achievement <- function(student_level_df, grade_pools_path, school_names_pa
     rename(system = acct_system, school = acct_school)
 
   # ====================== TCAP Participation Rate =======================
-  school_assessment <- read_csv(school_assessment_path)
+  school_assessment <- school_assessment_df
 
   tcap_participation <- school_assessment %>%
     filter(year == 2019, grade == 'All Grades', subject %in% c("Math", "ELA", math_eoc, english_eoc)) %>%
