@@ -164,9 +164,9 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
       score_target = case_when(
         metric >= AMO_target_double ~ 4,
         metric >= AMO_target ~ 3,
-        metric > metric_prior ~ 2,
-        metric == metric_prior ~ 1,
-        metric < metric_prior ~ 0,
+        ci_bound >= AMO_target ~ 2,
+        ci_bound > metric_prior ~ 1,
+        ci_bound <= metric_prior ~ 0,
         TRUE ~ NA_real_
       ),
       score = pmax(score_abs, score_target)
