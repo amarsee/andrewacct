@@ -4,10 +4,18 @@
 \alias{acct_ready_grad}
 \title{Accountability Ready Graduate Calculations}
 \usage{
-acct_ready_grad(ready_grad_student_level_path, grade_pools_path,
-  school_names_path, ready_grad_amo_path, ready_grad_school_path,
-  a_cut = 40, b_cut = 30, c_cut = 25, d_cut = 16,
-  min_n_count = 30)
+acct_ready_grad(
+  ready_grad_student_level_path,
+  grade_pools_path,
+  school_names_path,
+  ready_grad_amo_path,
+  ready_grad_school_path,
+  a_cut = 40,
+  b_cut = 30,
+  c_cut = 25,
+  d_cut = 16,
+  min_n_count = 30
+)
 }
 \arguments{
 \item{ready_grad_student_level_path}{Path to the Ready Graduate Student Level file (For Participation Rate)}
@@ -34,12 +42,15 @@ acct_ready_grad(ready_grad_student_level_path, grade_pools_path,
 This function creates Accountability dataframe for the Ready Graduate Indicator
 }
 \examples{
+\dontrun{
 acct_ready_grad('N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level_06182019.csv',
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 "N:/ORP_accountability/projects/2019_amo/ready_grad_school.csv",
 "N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_school.csv",
 a_cut = 40, b_cut = 30, c_cut = 25, d_cut = 16, min_n_count = 30)
+}
+
 }
 \keyword{accountability}
 \keyword{achievement,}

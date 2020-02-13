@@ -5,9 +5,14 @@
 \title{Save plot with TDOE Logo
 Default is the size of image determined to work best with PowerPoint slides}
 \usage{
-save_with_logo(file_path, plot_object = ggplot2::last_plot(),
-  fig_height = 4.95, fig_width = 9.17, fig_unit = "in",
-  fig_res = 1200)
+save_with_logo(
+  file_path,
+  plot_object = ggplot2::last_plot(),
+  fig_height = 4.95,
+  fig_width = 9.17,
+  fig_unit = "in",
+  fig_res = 1200
+)
 }
 \arguments{
 \item{file_path}{Path to save the image, ending in .png}

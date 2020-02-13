@@ -4,9 +4,16 @@
 \alias{acct_elpa}
 \title{Accountability ELPA Calculations}
 \usage{
-acct_elpa(school_elpa_path, grade_pools_path, school_names_path,
-  a_cut = 60, b_cut = 50, c_cut = 40, d_cut = 25,
-  min_n_count = 10)
+acct_elpa(
+  school_elpa_path,
+  grade_pools_path,
+  school_names_path,
+  a_cut = 60,
+  b_cut = 50,
+  c_cut = 40,
+  d_cut = 25,
+  min_n_count = 10
+)
 }
 \arguments{
 \item{school_elpa_path}{Path to the School Level ELPA file}
@@ -29,10 +36,13 @@ acct_elpa(school_elpa_path, grade_pools_path, school_names_path,
 This function creates Accountability dataframe for the ELPA Indicator
 }
 \examples{
+\dontrun{
 acct_elpa("N:/ORP_accountability/data/2019_ELPA/wida_growth_standard_school.csv",
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 60, 50, 40, 25, min_n_count= 10)
+}
+
 }
 \keyword{accountability}
 \keyword{el,}

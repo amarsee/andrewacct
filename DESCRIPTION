@@ -16,11 +16,14 @@ BugReports: https://github.com/amarsee/andrewacct/issues
 Imports: 
     purrr,
     dplyr,
-    magrittr
+    magrittr,
+    readr,
+    readxl,
+    janitor
 Suggests: 
     covr,
     testthat,
     spelling
 Language: en-US
 Remotes: tidyverse/dplyr
-RoxygenNote: 6.1.1.9000
+RoxygenNote: 7.0.2

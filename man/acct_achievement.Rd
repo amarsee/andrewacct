@@ -4,9 +4,19 @@
 \alias{acct_achievement}
 \title{Accountability Achievement Calculations}
 \usage{
-acct_achievement(student_level_df, grade_pools_path, school_names_path,
-  success_amo_path, act_substitution_path, school_assessment_df, a_cut,
-  b_cut, c_cut, d_cut, min_n_count = 30)
+acct_achievement(
+  student_level_df,
+  grade_pools_path,
+  school_names_path,
+  success_amo_path,
+  act_substitution_path,
+  school_assessment_df,
+  a_cut,
+  b_cut,
+  c_cut,
+  d_cut,
+  min_n_count = 30
+)
 }
 \arguments{
 \item{student_level_df}{Dataframe with student level achievement data}
@@ -33,8 +43,10 @@ acct_achievement(student_level_df, grade_pools_path, school_names_path,
 }
 \description{
 This function creates Accountability dataframe for the Achievement Indicator
+with the 2020 achievement indicator cuts by default
 }
 \examples{
+\dontrun{
 acct_achievement(sl_df,
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
@@ -42,6 +54,8 @@ acct_achievement(sl_df,
 "N:/ORP_accountability/data/2019_final_accountability_files/act_substitution_school.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/school_assessment_file.csv",
 45, 35, 27.5, 20, min_n_count= 30)
+}
+
 }
 \keyword{accountability}
 \keyword{achievement,}

@@ -19,8 +19,11 @@ This function takes a student level dataframe and aggregates it to the school/di
 Provides sums and means for desired columns.
 }
 \examples{
+\dontrun{
 agg_student_level(student_level_df,op_list = list(sum = c('enrolled', 'tested', 'valid tests')),
 system, school, subgroup)
+}
+
 }
 \keyword{aggregate,}
 \keyword{collapse}

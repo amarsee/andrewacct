@@ -4,9 +4,17 @@
 \alias{acct_grad_rate}
 \title{Accountability Achievement Calculations}
 \usage{
-acct_grad_rate(school_grad_rate_path, grade_pools_path, school_names_path,
-  grad_amo_path, a_cut = 95, b_cut = 90, c_cut = 80, d_cut = 67,
-  min_n_count = 30)
+acct_grad_rate(
+  school_grad_rate_path,
+  grade_pools_path,
+  school_names_path,
+  grad_amo_path,
+  a_cut = 95,
+  b_cut = 90,
+  c_cut = 80,
+  d_cut = 67,
+  min_n_count = 30
+)
 }
 \arguments{
 \item{school_grad_rate_path}{Path to the School Level Gradutation Rate file}
@@ -31,11 +39,14 @@ acct_grad_rate(school_grad_rate_path, grade_pools_path, school_names_path,
 This function creates Accountability dataframe for the Graduation Rate Indicator
 }
 \examples{
+\dontrun{
 acct_grad_rate("N:/ORP_accountability/data/2018_graduation_rate/school_grad_rate.csv",
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 "N:/ORP_accountability/projects/2019_amo/grad_school.csv",
 95, 90, 80, 67, min_n_count= 30)
+}
+
 }
 \keyword{accountability}
 \keyword{graduation}

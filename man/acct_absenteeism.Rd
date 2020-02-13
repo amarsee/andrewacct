@@ -4,10 +4,21 @@
 \alias{acct_absenteeism}
 \title{Accountability Chronic Absenteeism Calculations}
 \usage{
-acct_absenteeism(absenteeism_student_level_path, grade_pools_path,
-  school_names_path, absenteeism_amo_path, a_cut_k8 = 6, b_cut_k8 = 9,
-  c_cut_k8 = 13, d_cut_k8 = 20, a_cut_hs = 10, b_cut_hs = 14,
-  c_cut_hs = 20, d_cut_hs = 30, min_n_count = 30)
+acct_absenteeism(
+  absenteeism_student_level_path,
+  grade_pools_path,
+  school_names_path,
+  absenteeism_amo_path,
+  a_cut_k8 = 6,
+  b_cut_k8 = 9,
+  c_cut_k8 = 13,
+  d_cut_k8 = 20,
+  a_cut_hs = 10,
+  b_cut_hs = 14,
+  c_cut_hs = 20,
+  d_cut_hs = 30,
+  min_n_count = 30
+)
 }
 \arguments{
 \item{absenteeism_student_level_path}{Path to the Student Level Chronic Absenteeism file}
@@ -38,8 +49,10 @@ acct_absenteeism(absenteeism_student_level_path, grade_pools_path,
 }
 \description{
 This function creates Accountability dataframe for the Chronic Absenteeism Indicator
+with 2020 cuts by default
 }
 \examples{
+\dontrun{
 acct_absenteeism("N:/ORP_accountability/data/2019_chronic_absenteeism/school_chronic_absenteeism_Jul11.csv",
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
@@ -47,6 +60,8 @@ acct_absenteeism("N:/ORP_accountability/data/2019_chronic_absenteeism/school_chr
 a_cut_k8 = 6, b_cut_k8 = 9, c_cut_k8 = 13, d_cut_k8 = 20,
 a_cut_hs = 10, b_cut_hs = 14, c_cut_hs = 20, d_cut_hs = 30,
 min_n_count = 30)
+}
+
 }
 \keyword{absenteeism,}
 \keyword{accountability}

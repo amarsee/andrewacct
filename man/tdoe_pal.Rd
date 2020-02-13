@@ -11,6 +11,7 @@ The standard three-color TDOE palette for line plots comprises
 red, navy, and gray
 }
 \seealso{
-Other colour tdoe: \code{\link{scale_colour_tdoe}}
+Other colour tdoe: 
+\code{\link{scale_colour_tdoe}()}
 }
 \concept{colour tdoe}
