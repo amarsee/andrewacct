@@ -19,7 +19,14 @@ Imports:
     magrittr,
     readr,
     readxl,
-    janitor
+    janitor,
+    grDevices,
+    png,
+    ggplot2,
+    grid,
+    scales,
+    stats,
+    magick
 Suggests: 
     covr,
     testthat,

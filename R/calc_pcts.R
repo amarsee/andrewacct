@@ -6,16 +6,21 @@
 #' @param numerator_cols A character vector of columns to be used in the numerator.
 #' @param denom_col A single string of the column name to be used in the denominator.
 #' @keywords percent, percentage, calculate
-#' @export
+#'
 #' @examples
+#' \dontrun{
 #' calc_pcts(system_level, c('on_track', 'mastered'), 'valid_tests')
+#' }
+#'
+#' @export
+
 
 calc_pcts <- function(df, numerator_cols, denom_col){
   out_df <- df %>%
-    mutate_at(
+    dplyr::mutate_at(
       .vars = numerator_cols,
       .funs = list(pct = ~ round(. / (!!as.name(denom_col)) * 100 + 1e-10, 1))
     ) %>%
-    rename_at( vars( contains( "_pct") ), list( ~paste("pct", gsub("_pct|n_", "", .), sep = "_") ) )
+    dplyr::rename_at( vars( contains( "_pct") ), list( ~paste("pct", gsub("_pct|n_", "", .), sep = "_") ) )
   return(out_df)
 }

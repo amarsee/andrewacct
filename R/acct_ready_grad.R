@@ -34,7 +34,7 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
   grade_pools <- readr::read_csv(grade_pools_path) %>%
     dplyr::select(system, school, pool, designation_ineligible)
 
-  school_df <- dplyr::read_csv(school_names_path)
+  school_df <- readr::read_csv(school_names_path)
 
   # ========================== ACT/SAT Participation =============================================
   subgroups <- c("Black/Hispanic/Native American", "Economically Disadvantaged", "English Learners with Transitional 1-4",
@@ -105,7 +105,7 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
     return(out_df_act_partic)
   }
 
-  ready_grad_participation_rate <- raedr::read_csv(ready_grad_student_level_path,
+  ready_grad_participation_rate <- readr::read_csv(ready_grad_student_level_path,
                                             col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic') %>%
     dplyr::rename(system = district_no, school = school_no) %>%
     dplyr::mutate(

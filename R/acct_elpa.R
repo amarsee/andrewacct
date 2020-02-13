@@ -30,7 +30,7 @@ acct_elpa <- function(school_elpa_path, grade_pools_path, school_names_path,
   grade_pools <- readr::read_csv(grade_pools_path) %>%
     dplyr::select(system, school, pool, designation_ineligible)
 
-  school_df <- radr::read_csv(school_names_path)
+  school_df <- readr::read_csv(school_names_path)
 
   elpa <- readr::read_csv(school_elpa_path) %>%
     dplyr::filter(school !=0, system != 0, !grepl("Non-", subgroup))  %>%

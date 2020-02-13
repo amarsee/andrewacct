@@ -33,9 +33,9 @@ acct_grad_rate <- function(school_grad_rate_path, grade_pools_path, school_names
   grade_pools <- readr::read_csv(grade_pools_path) %>%
     dplyr::select(system, school, pool, designation_ineligible)
 
-  school_df <- dplyr::read_csv(school_names_path)
+  school_df <- readr::read_csv(school_names_path)
 
-  amo_grad <- dplyr::read_csv(grad_amo_path) %>%
+  amo_grad <- readr::read_csv(grad_amo_path) %>%
     dplyr::filter(!grepl("Non-", subgroup)) %>%
     dplyr::transmute(
       system, school,
@@ -48,7 +48,7 @@ acct_grad_rate <- function(school_grad_rate_path, grade_pools_path, school_names
     ) # %>%
   # filter(!(subgroup == "Native Hawaiian or Other Pacific Islander" & n_count == 0))
 
-  grad <- dplyr::read_csv(school_grad_rate_path) %>%
+  grad <- readr::read_csv(school_grad_rate_path) %>%
     dplyr::filter(school !=0, system != 0, !grepl("Non-", subgroup), !subgroup %in% c('Male', 'Female', 'Homeless', 'Migrant'),
            !(system == 90 & school == 7)) %>%
     dplyr::transmute(

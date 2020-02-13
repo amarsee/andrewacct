@@ -27,7 +27,9 @@ confidence_interval(
 This function creates a new column with the desired confidence interval bound. Names the new column ci_bound.
 }
 \examples{
+\dontrun{
 confidence_interval()
+}
 }
 \keyword{ci}
 \keyword{confidence}

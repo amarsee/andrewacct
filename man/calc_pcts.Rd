@@ -18,7 +18,10 @@ This function takes a dataframe and a list of columns to find a percentage for, 
 in the denominator. It returns a dataframe
 }
 \examples{
+\dontrun{
 calc_pcts(system_level, c('on_track', 'mastered'), 'valid_tests')
+}
+
 }
 \keyword{calculate}
 \keyword{percent,}
