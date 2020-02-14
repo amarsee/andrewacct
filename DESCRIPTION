@@ -26,11 +26,13 @@ Imports:
     grid,
     scales,
     stats,
-    magick
+    magick,
+    rlang (>= 0.1.2)
 Suggests: 
     covr,
     testthat,
-    spelling
+    spelling,
+    roxygen2
 Language: en-US
 Remotes: tidyverse/dplyr
 RoxygenNote: 7.0.2

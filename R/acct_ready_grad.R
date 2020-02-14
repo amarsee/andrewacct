@@ -130,7 +130,7 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
 
   # ====================== Ready Grad ========================
 
-  amo_ready_grad <- radr::read_csv(ready_grad_amo_path) %>%
+  amo_ready_grad <- readr::read_csv(ready_grad_amo_path) %>%
     dplyr::filter(!grepl("Non-", subgroup)) %>%
     dplyr::transmute(
       system, school,

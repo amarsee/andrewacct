@@ -40,72 +40,75 @@ acct_absenteeism <- function(absenteeism_student_level_path, grade_pools_path, s
                            min_n_count = 30){
 
   grade_pools <- readr::read_csv(grade_pools_path) %>%
-    dplyr::select(system, school, pool, designation_ineligible)
+    dplyr::select(.data$system, .data$school, .data$pool, .data$designation_ineligible)
 
   school_df <- readr::read_csv(school_names_path)
 
   amo_absenteeism <- readr::read_csv(absenteeism_amo_path,
                               col_types = "iicicccninnn") %>%
     dplyr::transmute(
-      system, school,
-      subgroup = case_when(
-        subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
+      .data$system, .data$school,
+      subgroup = dplyr::case_when(
+        .data$subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
         TRUE ~ subgroup
       ),
-      metric_prior = if_else(n_students >= min_n_count, pct_chronically_absent, NA_real_),
-      AMO_target = AMO_target, AMO_target_double = AMO_target_double
+      metric_prior = dplyr::if_else(.data$n_students >= min_n_count, .data$pct_chronically_absent, NA_real_),
+      AMO_target = .data$AMO_target, AMO_target_double = .data$AMO_target_double
     )
 
   absenteeism <- readr::read_csv(absenteeism_student_level_path,
                           col_types = "icicccnnn") %>%
-    dplyr::filter(school !=0, system != 0) %>%
+    dplyr::filter(.data$school !=0, .data$system != 0) %>%
     dplyr::transmute(
-      system, school, indicator = 'Chronic Absenteeism',
+      .data$system, .data$school, indicator = 'Chronic Absenteeism',
       subgroup = dplyr::case_when(
-        subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
-        TRUE ~ subgroup
+        .data$subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
+        TRUE ~ .data$subgroup
       ),
-      n_count = ifelse(n_students >= min_n_count, n_students, 0),
-      metric = ifelse(n_count > 0, pct_chronically_absent, NA_real_)
+      n_count = ifelse(.data$n_students >= min_n_count, .data$n_students, 0),
+      metric = ifelse(.data$n_count > 0, .data$pct_chronically_absent, NA_real_)
     ) %>%
     andrewacct::confidence_interval(bound = 'lower') %>%
     dplyr::left_join(amo_absenteeism, by = c('system', 'school', 'subgroup')) %>%
     dplyr::left_join(grade_pools, by = c("system", "school"))  %>%
     dplyr::mutate(
       score_abs = dplyr::case_when(
-        pool == "K8" & metric <= a_cut_k8 ~ 4,
-        pool == "K8" & metric <= b_cut_k8 ~ 3,
-        pool == "K8" & metric <= c_cut_k8 ~ 2,
-        pool == "K8" & metric <= d_cut_k8 ~ 1,
-        pool == "K8" & metric > d_cut_k8 ~ 0,
-        pool == "HS" & metric <= a_cut_hs ~ 4,
-        pool == "HS" & metric <= b_cut_hs ~ 3,
-        pool == "HS" & metric <= c_cut_hs ~ 2,
-        pool == "HS" & metric <= d_cut_hs ~ 1,
-        pool == "HS" & metric > d_cut_hs ~ 0,
+        .data$pool == "K8" & .data$metric <= a_cut_k8 ~ 4,
+        .data$pool == "K8" & .data$metric <= b_cut_k8 ~ 3,
+        .data$pool == "K8" & .data$metric <= c_cut_k8 ~ 2,
+        .data$pool == "K8" & .data$metric <= d_cut_k8 ~ 1,
+        .data$pool == "K8" & .data$metric > d_cut_k8 ~ 0,
+        .data$pool == "HS" & .data$metric <= a_cut_hs ~ 4,
+        .data$pool == "HS" & .data$metric <= b_cut_hs ~ 3,
+        .data$pool == "HS" & .data$metric <= c_cut_hs ~ 2,
+        .data$pool == "HS" & .data$metric <= d_cut_hs ~ 1,
+        .data$pool == "HS" & .data$metric > d_cut_hs ~ 0,
         TRUE ~ NA_real_
       ),
       score_target = dplyr::case_when(
-        metric <= AMO_target_double ~ 4,
-        metric <= AMO_target ~ 3,
-        ci_bound <= metric ~ 2,
-        ci_bound < metric_prior ~ 1,
-        ci_bound >= metric_prior ~ 0,
+        .data$metric <= .data$AMO_target_double ~ 4,
+        .data$metric <= .data$AMO_target ~ 3,
+        .data$ci_bound <= .data$metric ~ 2,
+        .data$ci_bound < .data$metric_prior ~ 1,
+        .data$ci_bound >= .data$metric_prior ~ 0,
         TRUE ~ NA_real_
       ),
-      score = pmax(score_abs, score_target),
+      score = pmax(.data$score_abs, .data$score_target),
       grade = dplyr::case_when(
-        score == 4 ~ 'A',
-        score == 3 ~ 'B',
-        score == 2 ~ 'C',
-        score == 1 ~ 'D',
-        score == 0 ~ 'F',
+        .data$score == 4 ~ 'A',
+        .data$score == 3 ~ 'B',
+        .data$score == 2 ~ 'C',
+        .data$score == 1 ~ 'D',
+        .data$score == 0 ~ 'F',
         TRUE ~ NA_character_
       )
     ) %>%
     dplyr::left_join(school_df, by = c('system', 'school')) %>%
-    dplyr::transmute(system, system_name, school, school_name, pool, designation_ineligible, indicator, subgroup, n_count, metric,
-              ci_bound, metric_prior, AMO_target, AMO_target_double, score_abs, score_target, score, grade)
+    dplyr::transmute(.data$system, .data$system_name, .data$school, .data$school_name,
+                     .data$pool, .data$designation_ineligible, .data$indicator,
+                     .data$subgroup, .data$n_count, .data$metric,
+                     .data$ci_bound, .data$metric_prior, .data$AMO_target, .data$AMO_target_double,
+                     .data$score_abs, .data$score_target, .data$score, .data$grade)
 
   return(absenteeism)
 
