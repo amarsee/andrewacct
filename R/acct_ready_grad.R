@@ -16,7 +16,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' acct_ready_grad('N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level_06182019.csv',
+#' acct_ready_grad('N:/ORP_accountability/projects/2019_ready_graduate/Data/
+#' ready_graduate_student_level_06182019.csv',
 #' "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 #' "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 #' "N:/ORP_accountability/projects/2019_amo/ready_grad_school.csv",
@@ -32,7 +33,7 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
                              a_cut = 40, b_cut = 30, c_cut = 25, d_cut = 16, min_n_count = 30){
 
   grade_pools <- readr::read_csv(grade_pools_path) %>%
-    dplyr::select(system, school, pool, designation_ineligible)
+    dplyr::select(.data$system, .data$school, .data$pool, .data$designation_ineligible)
 
   school_df <- readr::read_csv(school_names_path)
 
@@ -50,52 +51,54 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
       student_df <- df
       if (subgroup == "Black/Hispanic/Native American"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I') %>%
+          dplyr::filter(.data$race_ethnicity == 'B' | .data$race_ethnicity == 'H' |
+                          .data$race_ethnicity == 'I') %>%
           dplyr::mutate(subgroup = "Black/Hispanic/Native American")
         non_hist_df <- 0
       } else if (subgroup == "Economically Disadvantaged") {
         hist_df <- student_df %>%
-          dplyr::filter(econ_dis == 'Y') %>%
+          dplyr::filter(.data$econ_dis == 'Y') %>%
           dplyr::mutate(subgroup = "Economically Disadvantaged")
         non_hist_df <- 0
       }else if (subgroup == "English Learners with Transitional 1-4") {
         hist_df <- student_df %>%
-          dplyr::filter(elb == 'Y') %>%
+          dplyr::filter(.data$elb == 'Y') %>%
           dplyr::mutate(subgroup = "English Learners with Transitional 1-4")
         non_hist_df <- 0
       }else if (subgroup == "Super Subgroup"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'B' | race_ethnicity == 'H' | race_ethnicity == 'I' | elb == 'Y' | econ_dis == 'Y' | swd == 'Y') %>%
+          dplyr::filter(.data$race_ethnicity == 'B' | .data$race_ethnicity == 'H' | .data$race_ethnicity == 'I' |
+                          .data$elb == 'Y' | .data$econ_dis == 'Y' | .data$swd == 'Y') %>%
           dplyr::mutate(subgroup = "Super Subgroup")
         non_hist_df <- 0
       }else if (subgroup == "American Indian or Alaska Native"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'I') %>%
+          dplyr::filter(.data$race_ethnicity == 'I') %>%
           dplyr::mutate(subgroup = "American Indian or Alaska Native")
         non_hist_df <- 0
       }else if (subgroup ==  "Asian"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'A') %>%
+          dplyr::filter(.data$race_ethnicity == 'A') %>%
           dplyr::mutate(subgroup = "Asian")
         non_hist_df <- 0
       }else if (subgroup ==  "Black or African American"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'B') %>%
+          dplyr::filter(.data$race_ethnicity == 'B') %>%
           dplyr::mutate(subgroup = "Black or African American")
         non_hist_df <- 0
       }else if (subgroup ==  "Hispanic"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'H') %>%
+          dplyr::filter(.data$race_ethnicity == 'H') %>%
           dplyr::mutate(subgroup = "Hispanic")
         non_hist_df <- 0
       }else if (subgroup ==  "White"){
         hist_df <- student_df %>%
-          dplyr::filter(race_ethnicity == 'W') %>%
-          mutate(subgroup = "White")
+          dplyr::filter(.data$race_ethnicity == 'W') %>%
+          dplyr::mutate(subgroup = "White")
         non_hist_df <- 0
       }else {
         hist_df <- student_df %>%
-          dplyr::filter(swd == 'Y') %>%
+          dplyr::filter(.data$swd == 'Y') %>%
           dplyr::mutate(subgroup = "Students with Disabilities")
         non_hist_df <- 0
       }
@@ -107,96 +110,104 @@ acct_ready_grad <- function(ready_grad_student_level_path, grade_pools_path, sch
 
   ready_grad_participation_rate <- readr::read_csv(ready_grad_student_level_path,
                                             col_types = 'icccciccciiciiiiiiiiiiiiiiiiiiic') %>%
-    dplyr::rename(system = district_no, school = school_no) %>%
+    dplyr::rename(system = .data$district_no, school = .data$school_no) %>%
     dplyr::mutate(
-      cohort_indicator = dplyr::if_else(included_in_cohort == 'Y', 1, 0),
-      ready_grad_indicator = dplyr::if_else(ready_graduate == 'Y', 1, 0),
-      completed_act_or_sat = dplyr::if_else((sat_total > 0 | act_composite > 0) & included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0),
-      on_time_grad = dplyr::if_else(included_in_cohort == 'Y' & completion_type %in% c(1, 11, 12, 13), 1, 0)
+      cohort_indicator = dplyr::if_else(.data$included_in_cohort == 'Y', 1, 0),
+      ready_grad_indicator = dplyr::if_else(.data$ready_graduate == 'Y', 1, 0),
+      completed_act_or_sat = dplyr::if_else((.data$sat_total > 0 | .data$act_composite > 0) & .data$included_in_cohort == 'Y' & .data$completion_type %in% c(1, 11, 12, 13), 1, 0),
+      on_time_grad = dplyr::if_else(.data$included_in_cohort == 'Y' & .data$completion_type %in% c(1, 11, 12, 13), 1, 0)
     ) %>%
     act_partic_concat(subgroups) %>%
-    dplyr::group_by(system, school, subgroup) %>%
+    dplyr::group_by(.data$system, .data$school, .data$subgroup) %>%
     dplyr::summarise(
-      n_on_time_grads = sum(on_time_grad, na.rm = TRUE),
-      n_completed_act_or_sat = sum(completed_act_or_sat, na.rm = TRUE)
+      n_on_time_grads = sum(.data$on_time_grad, na.rm = TRUE),
+      n_completed_act_or_sat = sum(.data$completed_act_or_sat, na.rm = TRUE)
     ) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(
-      participation_rate = round(n_completed_act_or_sat/n_on_time_grads * 100 + 1e-5, 0)
+      participation_rate = round(.data$n_completed_act_or_sat/.data$n_on_time_grads * 100 + 1e-5, 0)
     ) %>%
-    dplyr::arrange(system, school, subgroup) %>%
-    dplyr::mutate(participation_rate = dplyr::if_else(n_on_time_grads < min_n_count, NA_real_, participation_rate))
+    dplyr::arrange(.data$system, .data$school, .data$subgroup) %>%
+    dplyr::mutate(participation_rate = dplyr::if_else(.data$n_on_time_grads < min_n_count, NA_real_, .data$participation_rate))
 
 
   # ====================== Ready Grad ========================
 
   amo_ready_grad <- readr::read_csv(ready_grad_amo_path) %>%
-    dplyr::filter(!grepl("Non-", subgroup)) %>%
+    dplyr::filter(!grepl("Non-", .data$subgroup)) %>%
     dplyr::transmute(
-      system, school,
+      .data$system, .data$school,
       subgroup = dplyr::case_when(
-        subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
-        TRUE ~ subgroup
+        .data$subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
+        TRUE ~ .data$subgroup
       ),
-      metric_prior = dplyr::if_else(grad_cohort >= min_n_count, pct_ready_grad, NA_real_),
-      AMO_target, AMO_target_double
+      metric_prior = dplyr::if_else(.data$grad_cohort >= min_n_count, .data$pct_ready_grad, NA_real_),
+      .data$AMO_target, .data$AMO_target_double
     )
 
   ready_grad <- readr::read_csv(ready_grad_school_path) %>%
-    dplyr::rename(participation_rate = act_participation_rate) %>%
-    dplyr::filter(school !=0, system != 0, !grepl("Non-", subgroup)) %>% #
+    dplyr::rename(participation_rate = .data$act_participation_rate) %>%
+    dplyr::filter(.data$school !=0, .data$system != 0, !grepl("Non-", .data$subgroup)) %>% #
     dplyr::transmute(
-      system, school, indicator = 'Ready Graduates',
+      .data$system, .data$school, indicator = 'Ready Graduates',
       subgroup = dplyr::case_when(
-        subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
-        TRUE ~ subgroup
-      ), participation_rate,
-      n_count = ifelse(n_count >= min_n_count, n_count, 0),
+        .data$subgroup == "English Learners" ~ "English Learners with Transitional 1-4",
+        TRUE ~ .data$subgroup
+      ), .data$participation_rate,
+      n_count = ifelse(.data$n_count >= min_n_count, .data$n_count, 0),
       # n_count = ifelse(n_count >= 20, n_count, 0),
-      metric = ifelse(n_count > 0, pct_ready_grad, NA_real_)
+      metric = ifelse(.data$n_count > 0, .data$pct_ready_grad, NA_real_)
     ) %>%
     andrewacct::confidence_interval() %>%
     dplyr::left_join(amo_ready_grad, by = c('system', 'school', 'subgroup')) %>%
     dplyr::mutate(
       score_abs = dplyr::case_when(
-        metric >= a_cut ~ 4,
-        metric >= b_cut ~ 3,
-        metric >= c_cut ~ 2,
-        metric >= d_cut ~ 1,
-        metric >= 0 ~ 0,
+        .data$metric >= a_cut ~ 4,
+        .data$metric >= b_cut ~ 3,
+        .data$metric >= c_cut ~ 2,
+        .data$metric >= d_cut ~ 1,
+        .data$metric >= 0 ~ 0,
         TRUE ~ NA_real_
       ),
       score_target = dplyr::case_when(
-        metric >= AMO_target_double ~ 4,
-        metric >= AMO_target ~ 3,
-        ci_bound >= AMO_target ~ 2,
-        ci_bound > metric_prior ~ 1,
-        ci_bound <= metric_prior ~ 0,
+        .data$metric >= .data$AMO_target_double ~ 4,
+        .data$metric >= .data$AMO_target ~ 3,
+        .data$ci_bound >= .data$AMO_target ~ 2,
+        .data$ci_bound > .data$metric_prior ~ 1,
+        .data$ci_bound <= .data$metric_prior ~ 0,
         TRUE ~ NA_real_
       ),
-      score = pmax(score_abs, score_target)
+      score = pmax(.data$score_abs, .data$score_target)
     ) %>%
     dplyr::left_join(grade_pools, by = c("system", "school")) %>%
-    dplyr::select(system, school, indicator, subgroup:designation_ineligible) %>%
+    dplyr::select(.data$system, .data$school, .data$indicator, .data$subgroup:.data$designation_ineligible) %>%
     dplyr::left_join(school_df, by = c('system', 'school')) %>%
-    dplyr::transmute(system, system_name, school, school_name, pool, designation_ineligible, indicator, subgroup, participation_rate, n_count, metric,
-              ci_bound, metric_prior, AMO_target, AMO_target_double, score_abs, score_target, score) %>%
+    dplyr::transmute(.data$system, .data$system_name, .data$school, .data$school_name,
+                     .data$pool, .data$designation_ineligible, .data$indicator,
+                     .data$subgroup, .data$participation_rate, .data$n_count, .data$metric,
+                     .data$ci_bound, .data$metric_prior, .data$AMO_target,
+                     .data$AMO_target_double, .data$score_abs, .data$score_target,
+                     .data$score) %>%
     dplyr::mutate(
-      participation_rate = dplyr::if_else(n_count == 0, NA_real_, participation_rate),
-      score_abs = dplyr::if_else(!is.na(participation_rate) & participation_rate < 95 & !is.na(score_abs) , 0, score_abs),
-      score_target = dplyr::if_else(!is.na(participation_rate) & participation_rate < 95 & !is.na(score_target), 0, score_target),
-      score = dplyr::if_else(!is.na(participation_rate) & participation_rate < 95 & !is.na(score), 0, score),
+      participation_rate = dplyr::if_else(.data$n_count == 0, NA_real_, .data$participation_rate),
+      score_abs = dplyr::if_else(!is.na(.data$participation_rate) & .data$participation_rate < 95 & !is.na(.data$score_abs) , 0, .data$score_abs),
+      score_target = dplyr::if_else(!is.na(.data$participation_rate) & .data$participation_rate < 95 & !is.na(.data$score_target), 0, .data$score_target),
+      score = dplyr::if_else(!is.na(.data$participation_rate) & .data$participation_rate < 95 & !is.na(.data$score), 0, .data$score),
       grade = dplyr::case_when(
-        score == 4 ~ 'A',
-        score == 3 ~ 'B',
-        score == 2 ~ 'C',
-        score == 1 ~ 'D',
-        score == 0 ~ 'F',
+        .data$score == 4 ~ 'A',
+        .data$score == 3 ~ 'B',
+        .data$score == 2 ~ 'C',
+        .data$score == 1 ~ 'D',
+        .data$score == 0 ~ 'F',
         TRUE ~ NA_character_
       )
     ) %>%
-    dplyr::select(system, system_name, school, school_name, pool, designation_ineligible, indicator, subgroup, participation_rate,
-           n_count, metric, ci_bound, metric_prior, AMO_target, AMO_target_double, score_abs, score_target, score, grade)
+    dplyr::select(.data$system, .data$system_name, .data$school, .data$school_name,
+                  .data$pool, .data$designation_ineligible, .data$indicator, .data$subgroup,
+                  .data$participation_rate, .data$n_count, .data$metric,
+                  .data$ci_bound, .data$metric_prior, .data$AMO_target,
+                  .data$AMO_target_double, .data$score_abs, .data$score_target,
+                  .data$score, .data$grade)
 
   return(ready_grad)
 

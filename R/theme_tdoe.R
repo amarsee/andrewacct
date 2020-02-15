@@ -23,10 +23,10 @@ theme_tdoe <- function(base_size = 9, base_family = "sans") {
       panel.grid = ggplot2::element_line(colour = NULL),
       panel.grid.major.y = ggplot2::element_line(colour = colors["Gray"], size = 0.25),
       panel.grid.minor = ggplot2::element_blank(),
-      plot.title = ggplot2::element_text(hjust = 0, size = rel(1.5), face = "bold"),
-      plot.subtitle = ggplot2::element_text(hjust = 0, size = rel(1.25)),
+      plot.title = ggplot2::element_text(hjust = 0, size = ggplot2::rel(1.5), face = "bold"),
+      plot.subtitle = ggplot2::element_text(hjust = 0, size = ggplot2::rel(1.25)),
       plot.margin = ggplot2::unit(c(1, 1, 2, 1), "lines"),
-      strip.text = ggplot2::element_text(size = rel(1.2)),
+      strip.text = ggplot2::element_text(size = ggplot2::rel(1.2)),
       strip.background = ggplot2::element_rect()))
 }
 
@@ -44,11 +44,12 @@ save_with_logo <- function(file_path, plot_object = ggplot2::last_plot(), fig_he
   logo <- magick::image_read("N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")
   grDevices::png(file_path, height = fig_height, width = fig_width, units = fig_unit, res = fig_res)
   print(plot_object)
-  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = unit(1.5, 'inches'))
+  grid::grid.raster(logo, x = 0.07, y = 0.03, just = c('left', 'bottom'), width = grid::unit(1.5, 'inches'))
   grDevices::dev.off()
 }
 
 
+#' @rdname save_with_logo
 #' @export
 add_tdoe_logo <- function(xmin, xmax, ymin, ymax, ...) {
   logo <- png::readPNG(source = "N:/ORP_accountability/projects/Andrew/Crosswalks/logo.png")

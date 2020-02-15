@@ -47,7 +47,7 @@ agg_student_level <- function(df, op_list = list(), ...){
           .vars = op_list$mean,
           .funs = ~round(mean(., na.rm = TRUE) + 1e-10, 1)
         ) %>%
-        ungroup()
+        dplyr::ungroup()
     } else {
       mean_df <- data.frame()
     }
@@ -80,7 +80,7 @@ agg_student_level <- function(df, op_list = list(), ...){
           .vars = op_list$var,
           .funs = ~round(var(., na.rm = TRUE) + 1e-10, 1)
         ) %>%
-        ungroup()
+        dplyr::ungroup()
     } else {
       var_df <- data.frame()
     }

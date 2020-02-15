@@ -21,6 +21,6 @@ calc_pcts <- function(df, numerator_cols, denom_col){
       .vars = numerator_cols,
       .funs = list(pct = ~ round(. / (!!as.name(denom_col)) * 100 + 1e-10, 1))
     ) %>%
-    dplyr::rename_at( vars( contains( "_pct") ), list( ~paste("pct", gsub("_pct|n_", "", .), sep = "_") ) )
+    dplyr::rename_at( dplyr::vars( dplyr::contains( "_pct") ), list( ~paste("pct", gsub("_pct|n_", "", .), sep = "_") ) )
   return(out_df)
 }

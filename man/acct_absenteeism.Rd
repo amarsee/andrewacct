@@ -53,7 +53,8 @@ with 2020 cuts by default
 }
 \examples{
 \dontrun{
-acct_absenteeism("N:/ORP_accountability/data/2019_chronic_absenteeism/school_chronic_absenteeism_Jul11.csv",
+acct_absenteeism("N:/ORP_accountability/data/2019_chronic_absenteeism/
+school_chronic_absenteeism_Jul11.csv",
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 "N:/ORP_accountability/projects/2019_amo/absenteeism_targets_school_primary_enrollment.csv",

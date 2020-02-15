@@ -2,6 +2,7 @@
 % Please edit documentation in R/theme_tdoe.R
 \name{save_with_logo}
 \alias{save_with_logo}
+\alias{add_tdoe_logo}
 \title{Save plot with TDOE Logo
 Default is the size of image determined to work best with PowerPoint slides}
 \usage{
@@ -13,6 +14,8 @@ save_with_logo(
   fig_unit = "in",
   fig_res = 1200
 )
+
+add_tdoe_logo(xmin, xmax, ymin, ymax, ...)
 }
 \arguments{
 \item{file_path}{Path to save the image, ending in .png}

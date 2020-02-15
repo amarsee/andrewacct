@@ -43,7 +43,8 @@ This function creates Accountability dataframe for the Ready Graduate Indicator
 }
 \examples{
 \dontrun{
-acct_ready_grad('N:/ORP_accountability/projects/2019_ready_graduate/Data/ready_graduate_student_level_06182019.csv',
+acct_ready_grad('N:/ORP_accountability/projects/2019_ready_graduate/Data/
+ready_graduate_student_level_06182019.csv',
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv",
 "N:/ORP_accountability/projects/2019_amo/ready_grad_school.csv",

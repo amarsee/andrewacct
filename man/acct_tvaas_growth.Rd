@@ -18,7 +18,8 @@ This function creates Accountability dataframe for the Growth Indicator
 }
 \examples{
 \dontrun{
-acct_tvaas_growth("N:/ORP_accountability/data/2019_tvaas/2019-School-Level-Accountability-Results-EOC-TCAP.xlsx",
+acct_tvaas_growth("N:/ORP_accountability/data/2019_tvaas/
+2019-School-Level-Accountability-Results-EOC-TCAP.xlsx",
 "N:/ORP_accountability/projects/2019_school_accountability/grade_pools_designation_immune.csv",
 "N:/ORP_accountability/data/2019_final_accountability_files/names.csv")
 }

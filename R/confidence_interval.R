@@ -21,7 +21,7 @@ confidence_interval <- function(df, metric_column = 'metric', denom_column = 'n_
   if (bound == 'upper') {
   # Upper Bound
   out_df <- df %>%
-    mutate(
+    dplyr::mutate(
       ci_bound = round(100 * ((!!as.name(denom_column))/((!!as.name(denom_column)) + (stats::qnorm(ci_fraction)^2)))*(((!!as.name(metric_column))/100) + ((stats::qnorm(ci_fraction)^2)/(2*(!!as.name(denom_column))))  +
                                                                        stats::qnorm(ci_fraction)* sqrt( ((((!!as.name(metric_column))/100) * (1 - ((!!as.name(metric_column))/100)))/ (!!as.name(denom_column))) + ((stats::qnorm(ci_fraction)^2) / (4* (!!as.name(denom_column))^2)))) + 1e-10,1)
     )

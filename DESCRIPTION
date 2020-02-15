@@ -27,11 +27,11 @@ Imports:
     scales,
     stats,
     magick,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    spelling
 Suggests: 
     covr,
     testthat,
-    spelling,
     roxygen2
 Language: en-US
 Remotes: tidyverse/dplyr
