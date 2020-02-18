@@ -17,7 +17,7 @@ acct_grad_rate(
 )
 }
 \arguments{
-\item{school_grad_rate_path}{Path to the School Level Gradutation Rate file}
+\item{school_grad_rate_path}{Path to the School Level Graduation Rate file}
 
 \item{grade_pools_path}{Path to the Grade Pools file}
 

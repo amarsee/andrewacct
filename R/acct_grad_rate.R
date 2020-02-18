@@ -2,7 +2,7 @@
 #'
 #' This function creates Accountability dataframe for the Graduation Rate Indicator
 #'
-#' @param school_grad_rate_path Path to the School Level Gradutation Rate file
+#' @param school_grad_rate_path Path to the School Level Graduation Rate file
 #' @param grade_pools_path Path to the Grade Pools file
 #' @param school_names_path Path to the file with School/System names
 #' @param grad_amo_path Path to the AMO file for the Graduation Rate Indicator
